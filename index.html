@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      svg {
+      	background: #fff;
+      	display:block;
+      	margin-top: 2rem;
+      }
+
+      pre {
+      	margin-top: 1rem;
+      	background: #ddecce;
+      	min-height: 1rem;
+      	font-size: 150%;
+      	padding: .5rem;
+      	white-space: normal;
+      	line-height:1.5
+      }
+      </style>
+  </head>
+  <body>
+
+
+ <div id="roulette-container">
+   </div>
+
+
+   <script src="roulette.js"></script>
+    <script>
+
+        var roulette = new Roulette({
+            elem_id:'roulette-container',
+            num_sectors:17,
+            margin:4,
+            width:600
+            })
+            ;
+        roulette.create();
+
+      </script>
+
+  </body>
+</html>
