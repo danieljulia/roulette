@@ -12,7 +12,15 @@
   
               if(props.margin==undefined) props.margin=0;
               this.margin=props.margin;
-  
+                
+              if(props.colors==undefined){
+                  props.colors=[];
+                  for(let i=0;i<this.num_sectors;i++){
+                    props.colors[i]=this.getColor();
+                  }
+              }
+              this.colors=props.colors;
+
               this.alpha=0;
               this.svg= document.createElement("svg");
               this.id="roulette"+this.random(10000);
@@ -50,7 +58,7 @@
                   var pas=360/this.num_sectors;
   
                   for(var i=0;i<this.num_sectors;i++){
-                      this.createArc('arc'+i,(i-0.5)*pas+this.margin/2,(i+1-0.5)*pas-this.margin/2);
+                      this.createArc(i,(i-0.5)*pas+this.margin/2,(i+1-0.5)*pas-this.margin/2);
                   }
                    document.getElementById(this.elem_id).innerHTML += "";
                    //this.requestAnimationFrame.call(this.win, this.update.bind(this));
@@ -75,7 +83,7 @@
               // arc
           createArc(id,start,end){
               var node = document.createElement("path");
-              node.setAttribute("id", id);
+              node.setAttribute("id", 'arc'+id);
               node.setAttribute("stroke", '#fff');
               node.setAttribute("fill-rule", 'evenodd');
   
@@ -114,8 +122,9 @@
   
               console.log("creant amb id ",id);
   
-              document.getElementById(id).setAttribute("d", d);
-              document.getElementById(id).setAttribute("fill", this.getColor());
+              document.getElementById('arc'+id).setAttribute("d", d);
+       
+              document.getElementById('arc'+id).setAttribute("fill", this.colors[id]);
              
           }
           
