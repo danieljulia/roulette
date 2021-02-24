@@ -56,6 +56,10 @@
               this.create();
             }
   
+            onChange(sector){
+               //event
+            }
+
               random(num){
                   return Math.floor(Math.random()*num);
               }
