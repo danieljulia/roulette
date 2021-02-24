@@ -4,8 +4,14 @@
     <meta charset="utf-8">
     <title></title>
     <style>
+      body {
+        transition: background-color 2s cubic-bezier(1, 1, 1, 1);
+        transition-delay: 0s;
+      }
+
+
       svg {
-      	background: #fff;
+      	/*background: #fff;*/
       	display:block;
       	margin-top: 2rem;
       
@@ -27,22 +33,39 @@
 
  <div id="roulette-container">
    </div>
-
+<div id="sector"></div>
 
 
    <script src="roulette.js"></script>
     <script>
 
-        var roulette = new Roulette({
+        const colors=['#f00','#0f0','#00f','#ff0','#0ff','#f0f','#008','#800','#080',
+            '#088','#880','#808','#f00','#0f0','#00f','#ff0','#0ff'];
+
+
+        let roulette = new Roulette({
             elem_id:'roulette-container',
             num_sectors:17,
+            speed:0.005,
             margin:4,
             width:600,
-           /* colors:['#f00','#0f0','#00f','#ff0','#0ff','#f0f','#008','#800','#080',
-            '#088','#880','#808','#f00','#0f0','#00f','#ff0','#0ff']*/
+            colors:colors
             })
             ;
-        roulette.create();
+
+        let svg= roulette.getSvg();
+
+        roulette.onChange=function(sector){
+          console.log("sector ",sector);
+          let elem=document.getElementById("sector");
+          elem.innerHTML="Sector "+sector;
+
+          document.body.style.backgroundColor = colors[sector];
+        
+         svg.style.backgroundColor=colors[sector];
+        
+
+        }
 
       </script>
 

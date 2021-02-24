@@ -2,11 +2,13 @@
         class Roulette {
             constructor(props) {
   
-              //this.update=this.update.bind(this);
-  
               if(props.num_sectors==undefined) props.num_sectors=36;
               this.num_sectors = props.num_sectors;
   
+              if(props.speed==undefined) props.speed=0.05;
+              this.speed = props.speed;
+        
+
               if(props.width==undefined) props.width=300;
               this.width = props.width;
   
@@ -20,6 +22,8 @@
                   }
               }
               this.colors=props.colors;
+              this.current_sector=0;
+              this.last_sector=-1;
 
               this.alpha=0;
               this.svg= document.createElement("svg");
@@ -28,6 +32,16 @@
               this.svg.setAttribute("viewBox", "0 0 "+this.width+" "+this.width);
               this.svg.setAttribute("width", this.width);
               this.svg.setAttribute("height", this.width);
+
+            /*
+              this.center = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+              this.center.setAttribute( 'fill', '#fff' );
+              this.center.setAttribute( 'cx', this.width/2 );
+              this.center.setAttribute( 'cy', this.width/2 );
+              this.center.setAttribute( 'r', 100 );
+              this.svg.appendChild( this.center );
+*/
+
               this.ball = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
               this.ball.setAttribute( 'fill', '#000' );
               this.ball.setAttribute( 'r', this.width/20 );
@@ -39,6 +53,7 @@
               this.elem_id=props.elem_id;
               var elem=document.getElementById(props.elem_id);
               elem.appendChild( this.svg );
+              this.create();
             }
   
               random(num){
@@ -61,22 +76,35 @@
                       this.createArc(i,(i-0.5)*pas+this.margin/2,(i+1-0.5)*pas-this.margin/2);
                   }
                    document.getElementById(this.elem_id).innerHTML += "";
-                   //this.requestAnimationFrame.call(this.win, this.update.bind(this));
                    requestAnimationFrame(this.update.bind(this));
               }
   
+              getSvg(){
+                  return this.svg;
+              }
+              setBackground(color){
+              
+               }
+
               update(){
-               
+                   
+
                   var bola_x=this.width/2+Math.sin(this.alpha)*this.width*5/12;
-                  var bola_y=this.width/2+Math.cos(this.alpha)*this.width*5/12;
-                  //console.log("soc aqui ",bola_x);
-                  this.alpha+=0.05;
+                  var bola_y=this.width/2-Math.cos(-this.alpha)*this.width*5/12;
+             
+                  this.alpha+=this.speed;
+                if(this.alpha>2*Math.PI) this.alpha=this.alpha-2*Math.PI;
+
+                  //compute current sector
+                  this.current_sector=Math.round(this.alpha*this.num_sectors/(2*Math.PI));
+                    if(this.current_sector!=this.last_sector){
+                        this.onChange(this.current_sector);
+                        this.last_sector=this.current_sector;
+                    }
                   var ball=document.getElementById(this.id).getElementsByClassName("ball")[0];
                   ball.setAttribute("cx", bola_x);
                   ball.setAttribute("cy", bola_y);
-                    //console.log("soc aqui ",ball);
-                  //this.ball.beginElement(); 
-                //  document.getElementById(this.elem_id).innerHTML += "";
+               
                   requestAnimationFrame(this.update.bind(this));
               }
   
@@ -84,11 +112,12 @@
           createArc(id,start,end){
               var node = document.createElement("path");
               node.setAttribute("id", 'arc'+id);
-              node.setAttribute("stroke", '#fff');
+              node.setAttribute("stroke", 'rgba(0,0,0,0)');
+              node.setAttribute("stroke-width", '2');
               node.setAttribute("fill-rule", 'evenodd');
   
              this.svg.appendChild(node);
-              console.log("en teoria lha afegit",node);
+             
               var opts = {
                   cx: this.width/2,
                   cy: this.width/2,
@@ -120,10 +149,7 @@
                   "Z"
               ].join(" ");
   
-              console.log("creant amb id ",id);
-  
               document.getElementById('arc'+id).setAttribute("d", d);
-       
               document.getElementById('arc'+id).setAttribute("fill", this.colors[id]);
              
           }
