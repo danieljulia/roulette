@@ -37,3 +37,7 @@ var roulette = new Roulette({
 roulette.create();
 
 ```
+
+## Screenshot 
+
+![Roulette](screenshots/roulette.png?raw=true "Roulette")
