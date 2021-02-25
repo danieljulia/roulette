@@ -3,6 +3,9 @@
 This is a vanilla javascript SVG generated "roulette", a circle with n sectors and a ball that spins around and the user can control.
 It's not intended to simulate a casino roulette whatsoever but as a kind of a random selector.
 
+## Demo 
+
+[Checkout the demo](https://danieljulia.github.io/roulette)
 
 ## Parameters
 
