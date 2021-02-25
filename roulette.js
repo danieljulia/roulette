@@ -26,6 +26,7 @@
               this.last_sector=-1;
 
               this.alpha=0;
+              this.talpha=0;
               this.svg= document.createElement("svg");
               this.id="roulette"+this.random(10000);
               this.svg.setAttribute("id", this.id);
@@ -49,16 +50,41 @@
               this.ball.setAttribute( 'cx', this.width/2 );
               this.ball.setAttribute( 'cy', this.width/2 );
               this.svg.appendChild( this.ball );
+
+              this.status="moving";
   
               this.elem_id=props.elem_id;
               var elem=document.getElementById(props.elem_id);
               elem.appendChild( this.svg );
               this.create();
+              let that=this;
+              document.getElementById(this.elem_id).addEventListener('click', function(e) {
+                var rect = e.target.getBoundingClientRect();
+                var id = e.target.getAttribute('id');
+                let sector=-1;
+                if(id.includes("arc")){
+                    console.log("si l'inclou");
+                    sector=id.substr(3);
+                    that.talpha=((2*Math.PI)/that.num_sectors)*sector;
+                    that.status="pausing";
+                    that.onStopped(sector);
+                }else{
+                    that.status="moving";
+                }
+          
+                //var x = e.clientX - rect.left; //x position within the element.
+               // var y = e.clientY - rect.top;  //y position within the element.
+                
+              });
+
             }
   
             onChange(sector){
                //event
             }
+            onStopped(sector){
+                //event
+             }
 
               random(num){
                   return Math.floor(Math.random()*num);
@@ -95,8 +121,20 @@
 
                   var bola_x=this.width/2+Math.sin(this.alpha)*this.width*5/12;
                   var bola_y=this.width/2-Math.cos(-this.alpha)*this.width*5/12;
+                
+                
+                  
+                    switch(this.status){
+                        case "moving":
+                            this.alpha+=this.speed;
+                            break;
+                        case "pausing":
+                            this.alpha+=(this.talpha-this.alpha)/16;
+                            break;
+                    }
              
-                  this.alpha+=this.speed;
+                
+                
                 if(this.alpha>2*Math.PI) this.alpha=this.alpha-2*Math.PI;
 
                   //compute current sector

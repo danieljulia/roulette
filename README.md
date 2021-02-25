@@ -6,13 +6,18 @@ It's not intended to simulate a casino roulette whatsoever but as a kind of a ra
 
 ## Parameters
 
-- elem_id: The id of the container
+- elem_id: The id of the container element
 - num_sectors: Number of sectors
 - speed: In radians per frame
 - margin: Margin within sectors
 - width: Width of svg (is always square)
-- colors: An array of colors 
-           
+- colors: An array of colors  (optional, default as random)
+
+## Events 
+
+onChange(sector)  When changes sector 
+onStopped(sector) When stopped in one sector after a click
+(see example)
 
 ## Sample
 
@@ -36,7 +41,7 @@ var roulette = new Roulette({
     '#088','#880','#808','#f00','#0f0','#00f','#ff0','#0ff']*/
     })
     ;
-roulette.create();
+
 
 ```
 
