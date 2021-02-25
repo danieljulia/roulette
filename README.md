@@ -15,8 +15,8 @@ It's not intended to simulate a casino roulette whatsoever but as a kind of a ra
 
 ## Events 
 
-onChange(sector)  When changes sector 
-onStopped(sector) When stopped in one sector after a click
+- onChange(sector)  When changes sector 
+- onStopped(sector) When stopped in one sector after a click
 (see example)
 
 ## Sample
